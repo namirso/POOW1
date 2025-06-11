@@ -21,10 +21,13 @@
                     <a class="nav-link" href="obras">Obras</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="usuarios">Usuário</a>
+                    <a class="nav-link" href="tipos">Tipos</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link btn btn-danger text-white" href="login">Sair</a>
+                    <a class="nav-link" href="usuarios">Usuários</a>
+                </li>
+                <li class="nav-item">
+                    <button type="button" class="nav-link btn btn-outline-danger" href="login">Sair</button>
                 </li>
             </ul>
         </div>

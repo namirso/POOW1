@@ -35,10 +35,13 @@
           <a class="nav-link active" href="obras">Obras</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="usuarios">Usuário</a>
+          <a class="nav-link" href="tipos">Tipos</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link btn btn-danger text-white" href="login">Sair</a>
+          <a class="nav-link" href="usuarios">Usuários</a>
+        </li>
+        <li class="nav-item">
+          <button type="button" class="nav-link btn btn-outline-danger" href="login">Sair</button>
         </li>
       </ul>
     </div>
@@ -48,7 +51,7 @@
 <main class="card">
   <div class="p-3">
     <h1 class="text-center">Obras</h1>
-    <form action="obras" method="post" class="mb-4 p-3">
+    <form action="obras" method="post" class="mb-4 p-3" accept-charset="UTF-8">
       <c:choose>
         <c:when test="${obra.id != null}">
           <h2>Editar Obra</h2>
@@ -65,8 +68,13 @@
         <input type="text" class="form-control" placeholder="Nome" name="nome" required value="${obra.nome}">
       </div>
       <div class="mb-3">
-        <label for="genero" class="form-label">Gênero</label>
-        <input type="text" class="form-control" placeholder="Gênero" name="genero" required value="${obra.genero}">
+        <label for="tipo" class="form-label">Tipo</label>
+        <select class="form-select" name="tipo" required>
+          <option value="" disabled selected>Selecione o tipo</option>
+          <c:forEach var="tipo" items="${tipos}">
+            <option value="${tipo.id}"  <c:if test="${obra.tipo.id == tipo.id}">selected</c:if>>${tipo.nome}</option>
+          </c:forEach>
+        </select>
       </div>
       <div class="mb-3">
         <label for="direcao" class="form-label">Direção</label>
@@ -75,10 +83,10 @@
 
       <c:choose>
         <c:when test="${obra.id != null}">
-          <input type="submit" class="btn btn-primary" value="Alterar" name="gravar">
+          <input type="submit" class="btn btn-success" value="Alterar" name="gravar">
         </c:when>
         <c:otherwise>
-          <input type="submit" class="btn btn-primary" value="Cadastrar" name="gravar">
+          <input type="submit" class="btn btn-success" value="Cadastrar" name="gravar">
         </c:otherwise>
       </c:choose>
     </form>
@@ -92,7 +100,7 @@
         <thead>
         <tr>
           <th>Nome</th>
-          <th>Gênero</th>
+          <th>Tipo</th>
           <th>Direção</th>
           <th>Ações</th>
         </tr>
@@ -101,10 +109,10 @@
         <c:forEach var="obra" items="${obras}">
           <tr>
             <td>${obra.nome}</td>
-            <td>${obra.genero}</td>
+            <td>${obra.tipo}</td>
             <td>${obra.direcao}</td>
             <td>
-              <a href="obras?opcao=editar&&info=${obra.id}" class="btn btn-warning btn-sm me-2">Editar</a>
+              <a href="obras?opcao=editar&&info=${obra.id}" class="btn btn-secondary btn-sm me-2">Editar</a>
               <a href="obras?opcao=excluir&&info=${obra.id}" class="btn btn-danger btn-sm">Excluir</a>
             </td>
           </tr>

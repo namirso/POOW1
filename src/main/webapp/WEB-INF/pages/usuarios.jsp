@@ -4,7 +4,7 @@
 
 <html lang="pt-BR">
 <head>
-  <title>Obras</title>
+  <title>Usuários</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4Q6Gf2aSP4eDXB8Miphtr37CMZZQ5oXLH2yaXMJ2w8e2ZtHTl7GptT4jmndRuHDT" crossorigin="anonymous">
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js" integrity="sha384-j1CDi7MgGQ12Z7Qab0qlWQ/Qqz24Gc6BM0thvEMVjHnfYGF0rmFCozFSxQBxwHKO" crossorigin="anonymous"></script>
   <style>
@@ -35,10 +35,13 @@
           <a class="nav-link" href="obras">Obras</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link active" href="usuarios">Usuário</a>
+          <a class="nav-link" href="tipos">Tipos</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link btn btn-danger text-white" href="login">Sair</a> <!-- Botão de Sair -->
+          <a class="nav-link active" href="usuarios">Usuários</a>
+        </li>
+        <li class="nav-item">
+          <button type="button" class="nav-link btn btn-outline-danger" href="login">Sair</button>
         </li>
       </ul>
     </div>
@@ -46,9 +49,9 @@
 </nav>
 
 <main class="card">
-  <h1 class="text-center">Usuários</h1>
   <div class="p-3">
-    <form action="usuarios" method="post" class="mb-4">
+    <h1 class="text-center">Usuários</h1>
+    <form action="usuarios" method="post" class="mb-4 p-3">
       <c:choose>
         <c:when test="${usuario.id != null}">
           <h2>Editar Usuário</h2>
@@ -75,10 +78,10 @@
 
       <c:choose>
         <c:when test="${usuario.id != null}">
-          <input type="submit" class="btn btn-primary" value="Alterar" name="gravar">
+          <input type="submit" class="btn btn-success" value="Alterar" name="gravar">
         </c:when>
         <c:otherwise>
-          <input type="submit" class="btn btn-primary" value="Cadastrar" name="gravar">
+          <input type="submit" class="btn btn-success" value="Cadastrar" name="gravar">
         </c:otherwise>
       </c:choose>
     </form>
@@ -102,7 +105,7 @@
             <td>${usuario.nome}</td>
             <td>${usuario.email}</td>
             <td>
-              <a href="usuarios?opcao=editar&&info=${usuario.id}" class="btn btn-warning btn-sm me-2">Editar</a>
+              <a href="usuarios?opcao=editar&&info=${usuario.id}" class="btn btn-secondary btn-sm me-2">Editar</a>
               <a href="usuarios?opcao=excluir&&info=${usuario.id}" class="btn btn-danger btn-sm">Excluir</a>
             </td>
           </tr>

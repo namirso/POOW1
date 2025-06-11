@@ -1,6 +1,7 @@
 package br.csi.dao;
 
 import br.csi.model.Obra;
+import br.csi.model.Tipo;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -11,13 +12,14 @@ public class ObraDAO {
         try {
             Connection conn = ConectarBancoDados.conectarBancoPostgres();
             PreparedStatement stmt = conn.prepareStatement(
-                    "UPDATE obra SET nome = ?, genero = ?, direcao = ? WHERE id = ?"
+                    "UPDATE obra SET nome = ?, direcao = ?, idtipo = ? WHERE id = ?"
             );
 
             stmt.setString(1, obra.getNome());
-            stmt.setString(2, obra.getGenero());
-            stmt.setString(3, obra.getDirecao());
+            stmt.setString(2, obra.getDirecao());
+            stmt.setInt(3, obra.getTipo().getId());
             stmt.setInt(4, obra.getId());
+
 
             stmt.execute();
         } catch (SQLException | ClassNotFoundException e) {
@@ -55,12 +57,12 @@ public class ObraDAO {
         try {
             Connection conn = ConectarBancoDados.conectarBancoPostgres();
             PreparedStatement stmt = conn.prepareStatement(
-                    "INSERT INTO obra (nome, genero, direcao) VALUES (?, ?, ?)"
+                    "INSERT INTO obra (nome, direcao, idtipo) VALUES (?, ?, ?)"
             );
 
             stmt.setString(1, obra.getNome());
-            stmt.setString(2, obra.getGenero());
-            stmt.setString(3, obra.getDirecao());
+            stmt.setString(2, obra.getDirecao());
+            stmt.setInt(3, obra.getTipo().getId());
 
             stmt.execute();
         } catch (SQLException | ClassNotFoundException e) {
@@ -79,14 +81,18 @@ public class ObraDAO {
             Connection conn = ConectarBancoDados.conectarBancoPostgres();
             Statement stmt = conn.createStatement();
 
-            ResultSet rs = stmt.executeQuery("SELECT * FROM obra ORDER BY nome");
+            ResultSet rs = stmt.executeQuery("SELECT * FROM obra_com_tipo");
             while (rs.next()) {
-                Obra ob = new Obra();
-                ob.setId(rs.getInt("id"));
-                ob.setNome(rs.getString("nome"));
-                ob.setGenero(rs.getString("genero"));
-                ob.setDirecao(rs.getString("direcao"));
 
+                Tipo tipo = new Tipo();
+                tipo.setId(rs.getInt("idtipo"));
+                tipo.setNome(rs.getString("tipo"));
+
+                Obra ob = new Obra();
+                ob.setId(rs.getInt("idobra"));
+                ob.setNome(rs.getString("nome"));
+                ob.setDirecao(rs.getString("direcao"));
+                ob.setTipo(tipo);
 
                 obras.add(ob);
             }
@@ -104,21 +110,23 @@ public class ObraDAO {
 
     public Obra buscar(int id) {
         Obra ob = new Obra();
-
+        Tipo tipo = new Tipo();
         try {
             Connection conn = ConectarBancoDados.conectarBancoPostgres();
             PreparedStatement stmt = conn.prepareStatement(
-                    "SELECT * FROM obra WHERE id = ?"
+                    "select * from obra_com_tipo WHERE idobra = ?"
             );
 
             stmt.setInt(1, id);
 
             ResultSet rs = stmt.executeQuery();
             if (rs.next()) {
-                ob.setId(rs.getInt("id"));
+                ob.setId(rs.getInt("idobra"));
                 ob.setNome(rs.getString("nome"));
-                ob.setGenero(rs.getString("genero"));
                 ob.setDirecao(rs.getString("direcao"));
+                tipo.setId(rs.getInt("idtipo"));
+                tipo.setNome(rs.getString("tipo"));
+                ob.setTipo(tipo);
             }
 
         } catch (SQLException | ClassNotFoundException e) {
@@ -144,7 +152,6 @@ public class ObraDAO {
             if (rs.next()) {
                 ob.setId(rs.getInt("id"));
                 ob.setNome(rs.getString("nome"));
-                ob.setGenero(rs.getString("genero"));
                 ob.setDirecao(rs.getString("direcao"));
             }
 

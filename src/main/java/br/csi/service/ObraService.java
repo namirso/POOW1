@@ -9,7 +9,6 @@ public class  ObraService {
     private static ObraDAO dao = new ObraDAO();
 
     public String excluir(int id){
-
         if(dao.excluir(id)){
             return "Sucesso ao excluir usuario";
         }else{

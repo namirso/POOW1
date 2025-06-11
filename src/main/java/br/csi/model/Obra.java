@@ -4,8 +4,16 @@ public class Obra {
 
     private int id;
     private String nome;
-    private String genero;
     private String direcao;
+    private Tipo tipo;
+
+    public Tipo getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(Tipo tipo) {
+        this.tipo = tipo;
+    }
 
     public int getId() {
         return id;
@@ -21,14 +29,6 @@ public class Obra {
 
     public void setNome(String nome) {
         this.nome = nome;
-    }
-
-    public String getGenero() {
-        return genero;
-    }
-
-    public void setGenero(String genero) {
-        this.genero = genero;
     }
 
     public String getDirecao() {
